@@ -6,10 +6,12 @@ coreapi==2.3.3
 coreschema==0.0.4
 cryptography==2.9.2
 defusedxml==0.6.0
+dj-database-url==0.5.0
 Django==3.0
 django-braces==1.14.0
 django-cors-headers==3.3.0
 django-filter==2.2.0
+django-heroku==0.3.1
 django-oauth-toolkit==1.3.2
 django-pagedown==2.1.2
 django-rest-framework-social-oauth2==1.1.0
@@ -24,6 +26,7 @@ MarkupSafe==1.1.1
 oauthlib==3.1.0
 openapi-codec==1.3.2
 Pillow==7.1.2
+psycopg2==2.7.5
 pycparser==2.20
 PyJWT==1.7.1
 python-decouple==3.3
@@ -38,4 +41,5 @@ social-auth-core==3.3.3
 sqlparse==0.3.1
 uritemplate==3.0.1
 urllib3==1.25.9
+whitenoise==5.1.0
 zipp==3.1.0
