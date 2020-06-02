@@ -18,7 +18,7 @@ router.register('events', EventApiViewSet, basename='events_create')
 router.register('tags/all', TagAllApiViewSet, basename='tags_all')
 router.register('tags', TagApiViewSet, basename='tags_create')
 
-router.register('user', UserCreateAPIView, basename='user_new'),
+# router.register('user', UserCreateAPIView, basename='user_new'),
 router.register('userinfo', UserInfoAPIView, basename='user_info'),
 
 urlpatterns = [
