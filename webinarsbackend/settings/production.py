@@ -1,10 +1,10 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ['ipaddress']
+ALLOWED_HOSTS = ['139.59.16.121', 'backend.webosium.xyz']
 
 CORS_ORIGIN_ALLOW = True
-CORS_ORIGIN_WHITELIST =['ipaddress']
+CORS_ORIGIN_WHITELIST =['http://localhost:3000', 'https://webosium.xyz', 'https://www.webosium.xyz']
 
 DATABASES = {
     'default': {
