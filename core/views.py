@@ -62,18 +62,21 @@ class EventAllApiViewSet(viewsets.ReadOnlyModelViewSet):
         if tags is None and title is None:
             return Event.objects.all()\
                 .filter(archived=False)\
+                .order_by('-date')\
                 .filter(status='A')
         elif tags is None:
             return Event.objects.all()\
                 .filter(name__icontains=title)\
                 .filter(status='A')\
                 .filter(archived=False)\
+                .order_by('-date')\
                 .distinct()
         elif title is None:
             return Event.objects.all()\
                 .filter(tags__name__in=tags.split(','))\
                 .filter(status='A')\
                 .filter(archived=False)\
+                .order_by('-date')\
                 .distinct()
         else:
             return Event.objects.all()\
@@ -81,6 +84,7 @@ class EventAllApiViewSet(viewsets.ReadOnlyModelViewSet):
                 .filter(name__icontains=title)\
                 .filter(status='A')\
                 .filter(archived=False)\
+                .order_by('-date')\
                 .distinct()
 
 
