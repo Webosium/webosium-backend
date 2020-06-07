@@ -44,3 +44,19 @@ class Event(CommonModelFields):
 
     def __str__(self):
         return self.name
+
+
+class Fest(CommonModelFields):
+    name        = models.CharField(max_length=150, null=False, blank=False)
+    cover       = models.ImageField(upload_to='fests/', null=True)
+    created_by  = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField(null=True)
+    date_start  = models.DateTimeField()
+    date_end    = models.DateTimeField()
+    timezone    = models.CharField(max_length=3, default='IST')
+    status      = models.CharField(max_length=1, choices=STATUS, null=False, default='P')
+    events      = models.ManyToManyField('Event')
+
+
+    def __str__(self):
+        return self.name

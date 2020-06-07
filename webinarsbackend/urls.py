@@ -18,6 +18,11 @@ router.register('events', EventApiViewSet, basename='events_create')
 router.register('tags/all', TagAllApiViewSet, basename='tags_all')
 router.register('tags', TagApiViewSet, basename='tags_create')
 
+router.register('fests/overview', FestOverviewApiViewSet, basename='fests_overview')
+router.register('fests/details', FestDetailsApiViewSet, basename='fests_details')
+router.register('fests/create', FestCreateApiViewSet, basename='fests_create')
+
+
 # router.register('user', UserCreateAPIView, basename='user_new'),
 router.register('userinfo', UserInfoAPIView, basename='user_info'),
 

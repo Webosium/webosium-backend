@@ -158,3 +158,28 @@ class TagApiViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+class FestOverviewApiViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class   = FestOverviewSerializer
+
+    def get_queryset(self):
+        return Fest.objects.all().filter(archived=False)
+
+
+class FestDetailsApiViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class   = FestDetailsSerializer
+
+    def get_queryset(self):
+        return Fest.objects.all().filter(archived=False)
+
+
+class FestCreateApiViewSet(viewsets.ModelViewSet):
+    serializer_class   = FestDetailsSerializer
+    permission_classes = (permissions.IsAuthenticated, TokenHasReadWriteScope,)
+
+    def get_queryset(self):
+        return Fest.objects.all().filter(archived=False)
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)

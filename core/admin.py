@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.db import models
 from pagedown.widgets import AdminPagedownWidget
 
-from core.models import Event, Tag
+from core.models import Event, Tag, Fest
 
 # Register your models here.
 def approve_event(modeladmin, request, queryset):
@@ -55,3 +55,19 @@ class TagAdmin(admin.ModelAdmin):
     fields=('name', 'created_by', 'archived',)
     list_display=('name', 'created_by', 'archived', 'created_at', 'updated_at',)
     actions = (archive_event, unarchive_event)
+
+
+@admin.register(Fest)
+class FestAdmin(admin.ModelAdmin):
+    fields=('name', 'date_start', 'date_end', 'timezone', 'events', 'created_by', 'description', 'cover', 'image_tag', 'status', 'created_at', 'updated_at', 'archived',)
+    list_display=('name', 'date_start', 'date_end', 'timezone', 'image_tag' ,'created_by', 'status', 'archived',)
+    readonly_fields = ('image_tag', 'created_at', 'updated_at',)
+    actions = (approve_event, reject_event, archive_event, unarchive_event)
+
+    def image_tag(self, obj):
+        if obj.cover:
+            return format_html('<img src="{}" height="150px" />'.format(obj.cover.url))
+        else:
+            return 'No Image'
+
+    image_tag.short_description = 'image'

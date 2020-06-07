@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from core.models import Event, Tag
+from core.models import Event, Tag, Fest
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -38,6 +38,33 @@ class TagSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+        )
+
+class FestOverviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fest
+        fields = (
+            'id',
+            'cover',
+            'name',
+            'date_start',
+            'date_end',
+            'timezone',
+        )
+
+
+class FestDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fest
+        fields = (
+            'id',
+            'name',
+            'cover',
+            'description',
+            'date_start',
+            'date_end',
+            'timezone',
+            'events',
         )
 
 
