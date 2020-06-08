@@ -39,7 +39,6 @@ class UserCreateAPIView(viewsets.ModelViewSet):
             headers=headers,
         )
 
-
 class UserInfoAPIView(viewsets.ReadOnlyModelViewSet):
     model              = User
     serializer_class   = UserInfoSerializer
@@ -173,9 +172,8 @@ class FestDetailsApiViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return Fest.objects.all().filter(archived=False)
 
-
 class FestCreateApiViewSet(viewsets.ModelViewSet):
-    serializer_class   = FestDetailsSerializer
+    serializer_class   = FestEditSerializer
     permission_classes = (permissions.IsAuthenticated, TokenHasReadWriteScope,)
 
     def get_queryset(self):

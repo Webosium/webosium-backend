@@ -6,7 +6,6 @@ from core.models import Event, Tag, Fest
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-
     class Meta:
         model = User
         fields = ('id', 'username','first_name', 'last_name', 'email', 'password')
@@ -26,7 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserInfoSerializer(serializers.ModelSerializer):
     is_admin = serializers.CharField(source='is_staff')
-
     class Meta:
         model = User
         fields = ('id', 'username','first_name', 'last_name', 'email', 'is_admin')
@@ -40,37 +38,9 @@ class TagSerializer(serializers.ModelSerializer):
             'name',
         )
 
-class FestOverviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fest
-        fields = (
-            'id',
-            'cover',
-            'name',
-            'date_start',
-            'date_end',
-            'timezone',
-        )
-
-
-class FestDetailsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fest
-        fields = (
-            'id',
-            'name',
-            'cover',
-            'description',
-            'date_start',
-            'date_end',
-            'timezone',
-            'events',
-        )
-
 
 class EventSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, read_only=True)
-
+    tags = serializers.SerializerMethodField(source='get_tags')
     class Meta:
         model = Event
         fields = (
@@ -87,6 +57,9 @@ class EventSerializer(serializers.ModelSerializer):
             'updated_at',
         )
 
+    def get_tags(self, obj):
+        return TagSerializer(obj.tags.filter(archived=False), many=True, read_only=True).data
+
 class EventEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -101,3 +74,48 @@ class EventEditSerializer(serializers.ModelSerializer):
             'image',
         )
 
+class FestOverviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fest
+        fields = (
+            'id',
+            'cover',
+            'name',
+            'date_start',
+            'date_end',
+            'timezone',
+        )
+
+
+class FestDetailsSerializer(serializers.ModelSerializer):
+    events = serializers.SerializerMethodField(source='get_events')
+    class Meta:
+        model = Fest
+        fields = (
+            'id',
+            'name',
+            'cover',
+            'description',
+            'date_start',
+            'date_end',
+            'timezone',
+            'events',
+        )
+
+    def get_events(self, obj):
+        return EventSerializer(obj.events.filter(archived=False, status="A"), many=True, read_only=False).data
+
+
+class FestEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fest
+        fields = (
+            'id',
+            'name',
+            'cover',
+            'description',
+            'date_start',
+            'date_end',
+            'timezone',
+            'events',
+        )
